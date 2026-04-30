@@ -1,3 +1,4 @@
+import './App.css';
 const btn = document.getElementById("generate-btn");
 const promptInput = document.getElementById("prompt");
 const image = document.getElementById("output-image");
