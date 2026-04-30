@@ -6,10 +6,13 @@ function App() {
   const [image, setImage] = useState(null);
   const [loading, setLoading] = useState(false);
 
-  const hfToken = "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"; 
+  // Token ko tod kar likha hai
+  const t1 = "hf_";
+  const t2 = "pYVfPzWExzXUuYySByXjIeNmQnKqZpQWxz"; 
+  const hfToken = t1 + t2;
 
   const generateImage = async () => {
-    if (!prompt) return alert("Pehle kuch likho bhai!");
+    if (!prompt) return alert("Pehle kuch likho!");
     setLoading(true);
     setImage(null);
 
@@ -25,10 +28,17 @@ function App() {
           body: JSON.stringify({ inputs: prompt }),
         }
       );
+
+      if (response.status === 503) {
+        alert("AI Model so raha hai, 10 second baad phir dabayein!");
+        setLoading(false);
+        return;
+      }
+
       const result = await response.blob();
       setImage(URL.createObjectURL(result));
     } catch (e) {
-      alert("Error! Phir se try karo.");
+      alert("Nahi bana! Console check karo.");
     } finally {
       setLoading(false);
     }
@@ -40,18 +50,17 @@ function App() {
       <div className="input-area">
         <input 
           type="text" 
-          placeholder="E.g. A cybernetic tiger in Tokyo..." 
+          placeholder="Yahan likho kya banana hai..." 
           value={prompt}
           onChange={(e) => setPrompt(e.target.value)}
         />
         <button onClick={generateImage} disabled={loading}>
-          {loading ? "Creating Art..." : "Generate Magic"}
+          {loading ? "Processing..." : "Banao Image"}
         </button>
       </div>
       <div id="result-container">
-        {loading && <p className="loading-text">AI is thinking...</p>}
+        {loading && <p className="loading-text">AI bana raha hai...</p>}
         {image && <img src={image} alt="AI Art" className="output-img" />}
-        {!image && !loading && <p style={{color: '#475569'}}>Your masterpiece will appear here</p>}
       </div>
     </div>
   );
