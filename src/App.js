@@ -1,7 +1,6 @@
-import "@/App.css";
+import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Generator from "@/pages/Generator";
-import { Toaster } from "@/components/ui/sonner";
+import Generator from "./Generator";
 
 function App() {
   return (
@@ -11,7 +10,6 @@ function App() {
           <Route path="/" element={<Generator />} />
         </Routes>
       </BrowserRouter>
-      <Toaster position="top-right" />
     </div>
   );
 }
